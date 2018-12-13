@@ -110,10 +110,10 @@ class Shape(dict):
     def xml(self):
         attrs = []
         style_str = self.style.string()
-        if 'style' not in self and style_str != '':
-            self['style'] = style_str
-        elif self.get('style', '') != '' and style_str != '':
+        if self.get('style', '') != '' and style_str != '':
             raise TypeError("You could only specify one style")
+        if 'style' not in self and style_str != '':  # we need extra settings
+            attrs.append(f'style="{style_str}"')
         for k, v in self.items():
             attrs.append(f'{k}="{v}"')
         attrs = " ".join(attrs)
